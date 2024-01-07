@@ -789,6 +789,7 @@ data_loader #(
 );
 
 wire [31:0] save_state_bridge_read_data;
+wire ss_save, ss_load;
 
 save_state_controller save_state_controller (
       .clk_74a(clk_74a),
@@ -1096,8 +1097,8 @@ gb gb
     // savestates
     .increaseSSHeaderCount  ( 0                 ),
     .cart_ram_size          ( cart_ram_size     ),
-    .save_state             ( 0                 ),
-    .load_state             ( 0                 ),
+    .save_state             ( ss_save           ),
+    .load_state             ( ss_load           ),
     .savestate_number       ( 0                 ),
     .sleep_savestate        ( sleep_savestate   ),
 
