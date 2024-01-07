@@ -386,10 +386,10 @@ end
     wire     [31:0] rtc_time_bcd;
     wire            rtc_valid;
 
-    wire            savestate_supported;
-    wire    [31:0]  savestate_addr;
-    wire    [31:0]  savestate_size;
-    wire    [31:0]  savestate_maxloadsize;
+    wire            savestate_supported   = 1;
+    wire    [31:0]  savestate_addr        = 32'h40000000;
+    wire    [31:0]  savestate_size        = 32'h10000;
+    wire    [31:0]  savestate_maxloadsize = savestate_size + 32'h1000;
 
     wire            savestate_start;
     wire            savestate_start_ack;
@@ -828,7 +828,7 @@ save_state_controller save_state_controller (
       .ss_be  (ss_be),
       .ss_ack (ss_ack),
 
-      .ss_busy(ss_busy)
+      .ss_busy()
   );
 
 //////// Start GB/GBC Stuff ////////
@@ -990,7 +990,7 @@ cart_top cart
     .SaveStateExt_wren          ( SaveStateBus_wren ),
     .SaveStateExt_rst           ( SaveStateBus_rst  ),
     .SaveStateExt_Dout          ( SaveStateBus_Dout ),
-    .savestate_load             ( savestate_load    ),
+    .savestate_load             ( savestate_load_gb ),
     .sleep_savestate            ( sleep_savestate   ),
 
     .Savestate_CRAMAddr         ( Savestate_CRAMAddr),
@@ -1107,7 +1107,7 @@ gb gb
     .SaveStateExt_wren      ( SaveStateBus_wren ),
     .SaveStateExt_rst       ( SaveStateBus_rst  ),
     .SaveStateExt_Dout      ( SaveStateBus_Dout ),
-    .SaveStateExt_load      ( savestate_load    ),
+    .SaveStateExt_load      ( savestate_load_gb ),
     
     .Savestate_CRAMAddr     ( Savestate_CRAMAddr ),
     .Savestate_CRAMRWrEn    ( Savestate_CRAMRWrEn ),
@@ -1392,7 +1392,7 @@ wire [9:0]  SaveStateBus_Adr;
 wire        SaveStateBus_wren;
 wire        SaveStateBus_rst; 
 wire [63:0] SaveStateBus_Dout;
-wire        savestate_load;
+wire        savestate_load_gb;
 
 wire [19:0] Savestate_CRAMAddr;     
 wire        Savestate_CRAMRWrEn;    
