@@ -360,8 +360,8 @@ end
     
 // bridge host commands
 // synchronous to clk_74a
-    wire            status_boot_done = pll_core_locked_s; 
-    wire            status_setup_done = pll_core_locked_s; // rising edge triggers a target command
+    wire            status_boot_done = pll_core_locked; 
+    wire            status_setup_done = pll_core_locked; // rising edge triggers a target command
     wire            status_running = reset_n; // we are running as soon as reset_n goes high
 
     wire            dataslot_requestread;
@@ -828,7 +828,7 @@ save_state_controller save_state_controller (
       .ss_be  (ss_be),
       .ss_ack (ss_ack),
 
-      .ss_busy()
+      .ss_busy(sleep_savestate)
   );
 
 //////// Start GB/GBC Stuff ////////
